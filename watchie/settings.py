@@ -122,7 +122,7 @@ USE_TZ = True
 
 # Set static url and media root to serve static files
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'account/static')
 
 # Set media url and media root to serve media contents
 MEDIA_URL = 'media/'
