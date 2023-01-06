@@ -8,6 +8,7 @@ django = "*"
 pep8 = "*"
 psycopg2-binary = "*"
 python-dotenv = "*"
+pillow = "*"
 
 [dev-packages]
 
