@@ -53,7 +53,7 @@ class Favorite(models.Model):
         (SCIFI, 'Sci-Fi'),
     ]
     user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favorites')
-    favorite = models.CharField(max_length=2, choices=FAVORITE_CHOICES, default=None)
+    favorite = models.CharField(max_length=2, choices=FAVORITE_CHOICES, default=None, unique=True)
 
     def __str__(self):
         return self.favorite

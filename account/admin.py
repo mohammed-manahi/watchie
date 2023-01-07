@@ -4,14 +4,23 @@ from account.models import User, Profile, Favorite, Subscription
 
 
 class ProfileInline(admin.TabularInline):
+    """
+    Add profile as inline ui view for user in admin site
+    """
     model = Profile
 
 
-class FavoriteInline(admin.TabularInline):
-    model = Favorite.user.through
+class AccountFavoriteAdmin(admin.TabularInline):
+    """
+    Add Intermediary for many-to-many relation between user and favorite model
+    """
+    model = User.favorites.through
 
 
 class SubscriptionInline(admin.TabularInline):
+    """
+    Add subscription as inline ui view for user in admin site
+    """
     model = Subscription
 
 
@@ -30,6 +39,14 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
     )
+    inlines = [ProfileInline, AccountFavoriteAdmin, SubscriptionInline]
+
+
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    """
+    Register favorite in admin site
+    """
     inlines = [
-        ProfileInline, FavoriteInline, SubscriptionInline
+        AccountFavoriteAdmin
     ]
