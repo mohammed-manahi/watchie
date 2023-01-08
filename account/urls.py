@@ -2,6 +2,8 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from account import views
 
+app_name = 'account'
+
 urlpatterns = [
     # Add django authentication url patterns
     path('', include('django.contrib.auth.urls')),

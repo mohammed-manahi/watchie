@@ -25,7 +25,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('index/', views.index, name='index'),
     # Include url patterns of account app
-    path('account/', include('account.urls')),
+    path('account/', include('account.urls', namespace='account')),
 ]
 
 if settings.DEBUG:
