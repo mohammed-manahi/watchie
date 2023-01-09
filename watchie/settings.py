@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Add third-party crispy forms to handle advanced forms with bootstrap
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +137,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Set customized user model as default
 AUTH_USER_MODEL = 'account.User'
+
+# Override default authentication urls for login and logout
+LOGIN_REDIRECT_URL = 'index'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
+# Set bootstrap theme kit for crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

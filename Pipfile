@@ -9,6 +9,7 @@ pep8 = "*"
 psycopg2-binary = "*"
 python-dotenv = "*"
 pillow = "*"
+django-crispy-forms = "*"
 
 [dev-packages]
 

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}
     Login
 {% endblock %}
 {% block content %}
-
     <section class="section section-shaped section-lg">
         <div class="shape shape-style-1 bg-gradient-default">
         </div>
@@ -15,30 +15,21 @@
                             <div class="text-center text-muted mb-4">
                                 <small>Log in with credentials</small>
                             </div>
-                            <form role="form">
+                            <form role="form" action="{% url 'account:login' %}" method="post">
+                                {% csrf_token %}
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                                        </div>
-                                        <input class="form-control" placeholder="Email" type="email">
+                                        {{ form.username|as_crispy_field }}
                                     </div>
                                 </div>
                                 <div class="form-group focused">
                                     <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                        </div>
-                                        <input class="form-control" placeholder="Password" type="password">
+                                        {{ form.password|as_crispy_field }}
                                     </div>
                                 </div>
-                                <div class="custom-control custom-control-alternative custom-checkbox">
-                                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                                    <label class="custom-control-label"
-                                           for=" customCheckLogin"><span>Remember me</span></label>
-                                </div>
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-primary my-4">Login in</button>
+                                    <input type="hidden" name="next" value="{{ next }}">
+                                    <input type="submit" value="Login" class="btn btn-primary my-4">
                                 </div>
                             </form>
                         </div>
@@ -57,20 +48,3 @@
 
     </section>
 {% endblock %}
-
-{#            {% if form.erros %}#}
-{#                <p>#}
-{#                    Your username and password didn't match.#}
-{#                    Please try again.#}
-{#                </p>#}
-{#            {% else %}#}
-{#            {% endif %}#}
-{#            <div class="login-form">#}
-{#                <form action="{% url 'account:login' %}" method="post">#}
-{#                    {{ form.as_p }}#}
-{#                    {% csrf_token %}#}
-                    {# Add hidden field to redirect next after the login #}
-{#                    <input type="hidden" name="next" value="{{ next }}">#}
-{#                    <input type="submit" value="Login">#}
-{#                </form>#}
-{#            </div>#}

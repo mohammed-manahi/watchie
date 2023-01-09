@@ -14,6 +14,8 @@
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- Nucleo Icons -->
     <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet"/>
     <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet"/>
@@ -112,49 +114,15 @@
                 </li>
             </ul>
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://www.facebook.com/CreativeTim/" target="_blank"
-                       data-toggle="tooltip" title="Like us on Facebook">
-                        <i class="fa fa-facebook-square"></i>
-                        <span class="nav-link-inner--text d-lg-none">Facebook</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://www.instagram.com/creativetimofficial"
-                       target="_blank" data-toggle="tooltip" title="Follow us on Instagram">
-                        <i class="fa fa-instagram"></i>
-                        <span class="nav-link-inner--text d-lg-none">Instagram</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://twitter.com/creativetim" target="_blank"
-                       data-toggle="tooltip" title="Follow us on Twitter">
-                        <i class="fa fa-twitter-square"></i>
-                        <span class="nav-link-inner--text d-lg-none">Twitter</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://github.com/creativetimofficial/argon-design-system"
-                       target="_blank" data-toggle="tooltip" title="Star us on Github">
-                        <i class="fa fa-github"></i>
-                        <span class="nav-link-inner--text d-lg-none">Github</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-outline-primary" href="https://www.creative-tim.com/builder/argon"
-                       target="_blank">
-                        <span class="nav-link-inner--text">Online Builder</span>
-                    </a>
-                </li>
-                <li class="nav-item d-none d-lg-block">
-                    <a href="https://www.creative-tim.com/product/argon-design-system-pro?ref=ads-upgrade-pro"
-                       target="_blank" class="btn btn-primary btn-icon">
-              <span class="btn-inner--icon">
-                <i class="fa fa-shopping-cart"></i>
-              </span>
-                        <span class="nav-link-inner--text">Upgrade to PRO</span>
-                    </a>
-                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        Welcome back {{ reques.user.first_name|default:request.user.username|capfirst }}
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'account:login' %}">Login</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
