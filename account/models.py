@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.urls import reverse
 
 
 class User(AbstractUser):
@@ -9,6 +10,10 @@ class User(AbstractUser):
     Customize default user model to set email to a unique field
     """
     email = models.EmailField(unique=True)
+
+    def get_absolute_url(self):
+        # Create canonical url for detail view
+        return reverse("account:dashboard", args=[self.pk, self.username])
 
     def __str__(self):
         return self.username
@@ -20,7 +25,7 @@ class Profile(models.Model):
     """
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_of_birth = models.DateField(blank=True, null=True)
-    photo = models.ImageField(upload_to='media/users', default='assets/img/default.png')
+    photo = models.ImageField(upload_to='media/users', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -52,7 +57,7 @@ class Favorite(models.Model):
         (DRAMA, 'Drama'),
         (SCIFI, 'Sci-Fi'),
     ]
-    user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favorites')
+    user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_favorites')
     favorite = models.CharField(max_length=2, choices=FAVORITE_CHOICES, default=None, unique=True)
 
     def __str__(self):

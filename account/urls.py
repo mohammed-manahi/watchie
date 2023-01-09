@@ -6,7 +6,7 @@ app_name = 'account'
 
 urlpatterns = [
     # Add user dashboard url pattern
-    path('dashboard', views.dashboard, name='dashboard'),
+    path('dashboard/<str:username>/<int:pk>/', views.dashboard, name='dashboard'),
     # # Add user registration url pattern
     # path('register/', views.register, name='register'),
     # # Add user edit url pattern

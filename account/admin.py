@@ -14,7 +14,7 @@ class AccountFavoriteAdmin(admin.TabularInline):
     """
     Add Intermediary for many-to-many relation between user and favorite model
     """
-    model = User.favorites.through
+    model = User.user_favorites.through
 
 
 class SubscriptionInline(admin.TabularInline):
