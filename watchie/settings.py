@@ -145,3 +145,7 @@ LOGOUT_URL = 'logout'
 
 # Set bootstrap theme kit for crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Set mailing smtp server for development
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

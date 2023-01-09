@@ -20,7 +20,7 @@ class Profile(models.Model):
     """
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_of_birth = models.DateField(blank=True, null=True)
-    photo = models.ImageField(upload_to='media/users')
+    photo = models.ImageField(upload_to='media/users', default='assets/img/default.png')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -73,7 +73,7 @@ class Subscription(models.Model):
     ]
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     code = models.UUIDField(default=uuid.uuid4, editable=False)
-    type = models.CharField(max_length=2, choices=SUBSCRIPTION_CHOICES, default=TRIAL, )
+    type = models.CharField(max_length=2, choices=SUBSCRIPTION_CHOICES, default=TRIAL)
     valid_from = models.DateTimeField()
     valid_to = models.DateTimeField()
     active = models.BooleanField()

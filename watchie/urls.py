@@ -20,12 +20,15 @@ from django.conf.urls.static import static
 from account import views
 
 urlpatterns = [
+    # Add django authentication url patterns
+    path('', include('django.contrib.auth.urls')),
+    # Include url patterns of account app
+    path('account/', include('account.urls', namespace='account')),
     path('admin/', admin.site.urls),
     # Add default route
     path('', views.index, name='index'),
     path('index/', views.index, name='index'),
-    # Include url patterns of account app
-    path('account/', include('account.urls', namespace='account')),
+
 ]
 
 if settings.DEBUG:
