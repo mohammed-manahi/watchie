@@ -8,6 +8,17 @@
         <div class="shape shape-style-1 bg-gradient-default">
         </div>
         <div class="container pt-lg-7">
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="alert-inner--icon"><i class="ni ni-support-16"></i></span>
+                    <span class="alert-inner--text"><strong>Error!</strong>
+                                        Your username and password didn't match.
+                                        Please try again.</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
             <div class="row justify-content-center">
                 <div class="col-lg-5">
                     <div class="card bg-secondary shadow border-0">
@@ -18,17 +29,6 @@
                             </div>
                             <form role="form" action="{% url 'login' %}" method="post">
                                 {% csrf_token %}
-                                {% if form.erros %}
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <span class="alert-inner--icon"><i class="ni ni-support-16"></i></span>
-                                        <span class="alert-inner--text"><strong>Error!</strong>
-                                        Your username and password didn't match.
-                                        Please try again.</span>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                {% endif %}
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-alternative">
                                         {{ form.username|as_crispy_field }}
