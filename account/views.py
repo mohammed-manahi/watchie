@@ -2,10 +2,11 @@ import uuid
 from datetime import timedelta
 from django.urls import reverse
 from django.utils import timezone
-from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
-from account.models import User, Profile, Favorite, Subscription
-from account.forms import RegistrationForm, ProfileForm, FavoriteForm, SubscriptionForm
+from django.contrib import messages
+from account.models import User, Profile, Subscription
+from account.forms import RegistrationForm, ProfileForm, SubscriptionForm, UserEditForm
 
 
 def index(request):
@@ -16,59 +17,6 @@ def index(request):
     """
     template = 'account/index.html'
     return render(request, template)
-
-
-# def register(request):
-#     """
-#     Create user registration view
-#     :param request:
-#     :return register template:
-#     """
-#     if request.method == 'POST':
-#         register_form = RegisterForm(data=request.POST)
-#         profile_form = ProfileForm(data=request.POST, files=request.FILES)
-#         favorite_form = FavoriteForm(data=request.POST)
-#         subscribe_form = SubscriptionForm(data=request.POST)
-#
-#         if register_form.is_valid() and profile_form.is_valid() and favorite_form.is_valid() and \
-#                 subscribe_form.is_valid():
-#             new_user = register_form.save(commit=False)
-#             # Set password method handles password hashing
-#             new_user.set_password(register_form.cleaned_data["password"])
-#             new_user.save()
-#
-#             profile_form.user = Profile.objects.create(user=new_user)
-#             profile_form.save()
-#
-#             # Save many-to-many relationship between user model and favorite model
-#             Favorite.objects.create(user=new_user)
-#             favorite_form.save()
-#
-#             # Set default subscription when new user performs registration
-#             Subscription.objects.create(user=new_user, type='TR', valid_from=timezone.now(),
-#                                         valid_to=timezone.now() + timedelta(days=14))
-#             subscribe_form.save()
-#             template = 'account/index.html'
-#             return render(request, template)
-#
-#         user_form = RegisterForm()
-#         profile_form = ProfileForm()
-#         favorite_form = FavoriteForm()
-#         subscribe_form = SubscriptionForm()
-#         template = 'account/register.html'
-#         context = {'user_form': user_form, 'profile_form': profile_form, 'favorite_form': favorite_form,
-#                    'subscribe_form': subscribe_form}
-#         return render(request, template, context)
-#
-#     else:
-#         user_form = RegisterForm()
-#         profile_form = ProfileForm()
-#         favorite_form = FavoriteForm()
-#         subscribe_form = SubscriptionForm()
-#         template = 'account/register.html'
-#         context = {'user_form': user_form, 'profile_form': profile_form, 'favorite_form': favorite_form,
-#                    'subscribe_form': subscribe_form}
-#         return render(request, template, context)
 
 
 def register(request):
@@ -104,7 +52,35 @@ def dashboard(request, username, pk):
     user = get_object_or_404(User, username=username, pk=pk)
     subscription = Subscription.objects.select_related("user").get(user__pk=pk)
     profile = Profile.objects.select_related("user").get(user__pk=pk)
-    favorites = user.user_favorites.all()
     template = 'account/dashboard.html'
-    context = {'user': user, 'subscription': subscription, 'profile': profile, 'favorites': favorites}
+    context = {'user': user, 'subscription': subscription, 'profile': profile}
     return render(request, template, context)
+
+
+@login_required
+def edit(request, pk):
+    """
+    Create user edit view
+    :param request:
+    :param pk:
+    :return edit template:
+    """
+    user = get_object_or_404(User, pk=pk, is_active=True)
+    if user:
+        if request.method == 'POST':
+            user_form = UserEditForm(data=request.POST, instance=request.user)
+            profile_form = ProfileForm(data=request.POST, instance=request.user.profile, files=request.FILES)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                messages.success(request, "Your profile has been updated successfully")
+            else:
+                messages.error(request, "An Error occurred while updating your profile")
+        else:
+            user_form = UserEditForm(instance=request.user)
+            profile_form = ProfileForm(instance=request.user.profile)
+
+        template = "account/edit.html"
+        context = {'user_form': user_form, 'profile_form': profile_form}
+        return render(request, template, context)
+    return HttpResponse('Not Found')

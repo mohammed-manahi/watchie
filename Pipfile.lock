@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7b8ef0f2f6872ee857f3cce626fa92605c5afe7e23cc66f0bf4df4f89894d492"
+            "sha256": "92245873ffa4bf297d02bff01b92d4fb55b103f804f2e8238573b123098e9924"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -39,6 +39,22 @@
             ],
             "index": "pypi",
             "version": "==1.14.0"
+        },
+        "django-multipleselectfield": {
+            "hashes": [
+                "sha256:9761564547301024913db225b17a5bd4b8a70ec9c1d76e9f87308793c99de1ef",
+                "sha256:a0b20f68c8f61fa48ff1b85f2f3c90d71f38eecd0ff187c20400e1eda47f7afc"
+            ],
+            "index": "pypi",
+            "version": "==0.2.0.post2"
+        },
+        "django-multiselectfield": {
+            "hashes": [
+                "sha256:c270faa7f80588214c55f2d68cbddb2add525c2aa830c216b8a198de914eb470",
+                "sha256:d0a4c71568fb2332c71478ffac9f8708e01314a35cf923dfd7a191343452f9f9"
+            ],
+            "index": "pypi",
+            "version": "==0.1.12"
         },
         "pep8": {
             "hashes": [
@@ -208,6 +224,14 @@
             ],
             "index": "pypi",
             "version": "==0.21.0"
+        },
+        "six": {
+            "hashes": [
+                "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
+                "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
+            ],
+            "index": "pypi",
+            "version": "==1.16.0"
         },
         "sqlparse": {
             "hashes": [

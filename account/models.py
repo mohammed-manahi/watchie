@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.urls import reverse
+from multiselectfield import MultiSelectField
 
 
 class User(AbstractUser):
@@ -10,6 +11,7 @@ class User(AbstractUser):
     Customize default user model to set email to a unique field
     """
     email = models.EmailField(unique=True)
+    username = models.CharField(max_length=200, unique=True)
 
     def get_absolute_url(self):
         # Create canonical url for detail view
@@ -22,20 +24,6 @@ class User(AbstractUser):
 class Profile(models.Model):
     """
     Create profile model and associate one-to-one relationship with user model
-    """
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    date_of_birth = models.DateField(blank=True, null=True)
-    photo = models.ImageField(upload_to='media/users', blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'{self.user.username} profile'
-
-
-class Favorite(models.Model):
-    """
-    Create favorite model and associate many-to-many with user model
     """
     ACTION = 'AC'
     ADVENTURE = 'AD'
@@ -57,11 +45,15 @@ class Favorite(models.Model):
         (DRAMA, 'Drama'),
         (SCIFI, 'Sci-Fi'),
     ]
-    user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_favorites')
-    favorite = models.CharField(max_length=2, choices=FAVORITE_CHOICES, default=None, unique=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    favorite = MultiSelectField(max_length=10, choices=FAVORITE_CHOICES, default=None)
+    date_of_birth = models.DateField(blank=True, null=True)
+    photo = models.ImageField(upload_to='media/users', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.favorite
+        return f'{self.user.username} profile'
 
 
 class Subscription(models.Model):
@@ -84,4 +76,4 @@ class Subscription(models.Model):
     active = models.BooleanField()
 
     def __str__(self):
-        return self.type
+        return str(self.type)

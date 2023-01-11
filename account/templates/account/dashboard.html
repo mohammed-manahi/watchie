@@ -73,16 +73,24 @@
                                             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
                                                 Subscription Plan:
                                                 {{ subscription.get_type_display }}
+                                                <small>(since: {{ user.date_joined|date }})</small>
                                             </div>
                                             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
                                                 Subscription Ends in:
-                                                {{ subscription.valid_to }}
+                                                {{ subscription.valid_to|date }}
+                                                <small>(Left: {{ subscription.valid_to|timeuntil }})</small>
                                             </div>
-                                            {% if favorites %}
+                                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
+                                                Subscription Code:
+                                                <fieldset disabled="disabled">
+                                                    {{ subscription.code }}
+                                                </fieldset>
+                                            </div>
+                                            {% if profile.favorite %}
                                                 <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
-                                                    Favorites Categories:
-                                                    {% for favorite in favorites %}
-                                                        <span class="badge badge-pill badge-primary text-uppercase"> {{ favorite.get_favorite_display }}</span>
+                                                    Favorite Categories:
+                                                    {% for favorite in profile.favorite %}
+                                                        <span class="badge badge-pill badge-primary text-uppercase"> {{ favorite }}</span>
                                                     {% endfor %}
                                                 </div>
                                             {% endif %}

@@ -10,6 +10,9 @@ psycopg2-binary = "*"
 python-dotenv = "*"
 pillow = "*"
 django-crispy-forms = "*"
+django-multipleselectfield = "*"
+six = "*"
+django-multiselectfield = "*"
 
 [dev-packages]
 

@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Add third-party crispy forms to handle advanced forms with bootstrap
     'crispy_forms',
+    # Add third-party multi select field to handle many-to-many relationships
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [

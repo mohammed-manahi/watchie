@@ -12,7 +12,6 @@
             {{ profile_form.as_p }}
             {{ favorite_form.as_p }}
             {{ subscribe_form.as_p }}
-            <input type="hidden" value="{{ type }}">
             {% csrf_token %}
             <p><input type="submit" value="Create my account"></p>
         </form>

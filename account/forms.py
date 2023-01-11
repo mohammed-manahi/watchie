@@ -1,5 +1,15 @@
 from django import forms
-from account.models import User, Profile, Favorite, Subscription
+from account.models import User, Profile, Subscription
+
+
+class UserEditForm(forms.ModelForm):
+    """
+    Create user edit form to edit default user fields
+    """
+
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name"]
 
 
 class LoginForm(forms.Form):
@@ -43,18 +53,8 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['date_of_birth', 'photo']
+        fields = ['date_of_birth', 'photo', 'favorite']
         widgets = {'date_of_birth': forms.widgets.DateInput(attrs={'type': 'date'})}
-
-
-class FavoriteForm(forms.ModelForm):
-    """
-    Create user favorite model form
-    """
-
-    class Meta:
-        model = Favorite
-        fields = ['favorite']
 
 
 class SubscriptionForm(forms.ModelForm):
@@ -68,4 +68,3 @@ class SubscriptionForm(forms.ModelForm):
         """
         model = Subscription
         fields = ['type']
-        widgets = {'type': forms.HiddenInput()}

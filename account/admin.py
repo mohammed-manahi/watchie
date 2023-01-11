@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from account.models import User, Profile, Favorite, Subscription
+from account.models import User, Profile, Subscription
 
 
 class ProfileInline(admin.TabularInline):
@@ -8,13 +8,6 @@ class ProfileInline(admin.TabularInline):
     Add profile as inline ui view for user in admin site
     """
     model = Profile
-
-
-class AccountFavoriteAdmin(admin.TabularInline):
-    """
-    Add Intermediary for many-to-many relation between user and favorite model
-    """
-    model = User.user_favorites.through
 
 
 class SubscriptionInline(admin.TabularInline):
@@ -39,14 +32,7 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
     )
-    inlines = [ProfileInline, AccountFavoriteAdmin, SubscriptionInline]
+    inlines = [ProfileInline, SubscriptionInline]
 
 
-@admin.register(Favorite)
-class FavoriteAdmin(admin.ModelAdmin):
-    """
-    Register favorite in admin site
-    """
-    inlines = [
-        AccountFavoriteAdmin
-    ]
+
