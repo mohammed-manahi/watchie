@@ -62,11 +62,14 @@ class ProfileForm(forms.ModelForm):
         Custom validation for date of birth
         :return validated date of birth:
         """
-        date_of_birth = self.cleaned_data['date_of_birth']
-        age = (date.today() - date_of_birth) // timedelta(days=365.2425)
-        if age < 18:
-            raise forms.ValidationError("Birthday is not allowed")
-        return date_of_birth
+        if self.cleaned_data['date_of_birth'] is not None:
+            date_of_birth = self.cleaned_data['date_of_birth']
+            age = (date.today() - date_of_birth) // timedelta(days=365.2425)
+            if age < 18:
+                raise forms.ValidationError("Birthday is not allowed")
+            return date_of_birth
+        else:
+            return None
 
 
 class SubscriptionForm(forms.ModelForm):

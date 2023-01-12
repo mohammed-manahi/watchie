@@ -61,3 +61,19 @@ def save_user_subscription(sender, instance, **kwargs):
     :return save user subscription:
     """
     instance.subscription.save()
+
+
+@receiver(post_save, sender=User)
+def deactivate_user_subscription(sender, instance, **kwargs):
+    """
+    Deactivate trial user subscription when it ends
+    :param sender:
+    :param instance:
+    :param kwargs:
+    :return deactivate user subscription:
+    """
+    # WRong condition
+    if Subscription.objects.filter(user=instance, valid_from__lte=timezone.now(),
+                                   valid_to__gte=timezone.now()).exists():
+        Subscription.objects.update(active=False)
+        instance.subscription.save()

@@ -15,7 +15,7 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         # Create canonical url for detail view
-        return reverse("account:dashboard", args=[self.pk, self.username])
+        return reverse('account:dashboard', args=[self.pk, self.username])
 
     def __str__(self):
         return self.username
@@ -46,7 +46,7 @@ class Profile(models.Model):
         (SCIFI, 'Sci-Fi'),
     ]
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    favorite = MultiSelectField(max_length=10, choices=FAVORITE_CHOICES, default=None)
+    favorite = MultiSelectField(max_length=100, choices=FAVORITE_CHOICES, default=None, null=True, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to='media/users', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
