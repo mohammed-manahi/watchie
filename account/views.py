@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from account.models import User, Profile, Subscription
 from account.forms import RegistrationForm, ProfileForm, SubscriptionForm, UserEditForm
+from account.helpers import is_subscription_active
 
 
 def index(request):
@@ -52,8 +53,10 @@ def dashboard(request, username, pk):
     user = get_object_or_404(User, username=username, pk=pk)
     subscription = Subscription.objects.select_related("user").get(user__pk=pk)
     profile = Profile.objects.select_related("user").get(user__pk=pk)
+    subscription_status = is_subscription_active(pk)
     template = 'account/dashboard.html'
-    context = {'user': user, 'subscription': subscription, 'profile': profile}
+    context = {'user': user, 'subscription': subscription, 'profile': profile,
+               'subscription_status': subscription_status}
     return render(request, template, context)
 
 
