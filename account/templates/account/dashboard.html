@@ -112,17 +112,20 @@
                                                 <fieldset disabled="disabled">
                                                     {{ subscription.code }}
                                                 </fieldset>
-                                            </div>
-                                                <a class="btn btn-link text-primary"
-                                                   href="{% url 'account:edit' request.user.id %}">Update Profile</a>
-                                            </div>
-                                        {% if request.user.pk == user.pk %}
-                                            <div class="tab-pane fade" id="tabs-text-3" role="tabpanel"
-                                                 aria-labelledby="tabs-text-3-tab">
-                                                <a class="btn btn-link text-warning" href="{% url 'password_change' %}">Change
-                                                    Password</a>
-                                            </div>
-                                        {% endif %}
+                                                {% if request.user.pk == user.pk %}
+                                                    </div>
+                                                    <a class="btn btn-link text-primary"
+                                                       href="{% url 'account:edit' request.user.id %}">Update
+                                                        Profile</a>
+                                                    </div>
+
+                                                    <div class="tab-pane fade" id="tabs-text-3" role="tabpanel"
+                                                         aria-labelledby="tabs-text-3-tab">
+                                                        <a class="btn btn-link text-warning"
+                                                           href="{% url 'password_change' %}">Change
+                                                            Password</a>
+                                                    </div>
+                                                {% endif %}
                                     </div>
                                 </div>
                             </div>
