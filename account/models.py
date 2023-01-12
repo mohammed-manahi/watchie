@@ -25,15 +25,15 @@ class Profile(models.Model):
     """
     Create profile model and associate one-to-one relationship with user model
     """
-    ACTION = 'AC'
-    ADVENTURE = 'AD'
-    BIOGRAPHY = 'BI'
-    COMEDY = 'CO'
-    CRIME = 'CR'
-    HISTORY = 'HI'
-    HORROR = 'HO'
-    DRAMA = 'DR'
-    SCIFI = 'SC'
+    ACTION = 'ACTION'
+    ADVENTURE = 'ADVENTURE'
+    BIOGRAPHY = 'BIOGRAPHY'
+    COMEDY = 'COMEDY'
+    CRIME = 'CRIME'
+    HISTORY = 'HISTORY'
+    HORROR = 'HORROR'
+    DRAMA = 'DRAMA'
+    SCIFI = 'SCIFI'
     FAVORITE_CHOICES = [
         (ACTION, 'Action'),
         (ADVENTURE, 'Adventure'),
