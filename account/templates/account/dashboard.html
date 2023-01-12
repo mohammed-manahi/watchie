@@ -68,8 +68,7 @@
                                         <div class="tab-pane fade show active" id="tabs-text-1" role="tabpanel"
                                              aria-labelledby="tabs-text-1-tab">
 
-                                            <div class="h6 mt-4">Account Registration: {{ user.date_joined|date }}
-                                                <small>(since: {{ user.date_joined|timesince }})</small></div>
+
                                             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
                                                 Subscription Plan:
                                                 {{ subscription.get_type_display }}
@@ -80,12 +79,7 @@
                                                 {{ subscription.valid_to|date }}
                                                 <small>(Left: {{ subscription.valid_to|timeuntil }})</small>
                                             </div>
-                                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
-                                                Subscription Code:
-                                                <fieldset disabled="disabled">
-                                                    {{ subscription.code }}
-                                                </fieldset>
-                                            </div>
+
                                             {% if profile.favorite %}
                                                 <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
                                                     Favorite Categories:
@@ -97,10 +91,27 @@
                                         </div>
                                         <div class="tab-pane fade" id="tabs-text-2" role="tabpanel"
                                              aria-labelledby="tabs-text-2-tab">
-                                            <p class="description">Cosby sweater eu banh mi, qui irure terry richardson
-                                                ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis
-                                                cardigan american apparel, butcher voluptate nisi qui.</p>
-                                        </div>
+                                            <div class="h6 mt-4">Account Registration: {{ user.date_joined|date }}
+                                                <small>(since: {{ user.date_joined|timesince }})</small></div>
+                                            {% if profile.date_of_birth %}
+                                                <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
+                                                    Date of birth:
+                                                    {{ profile.date_of_birth|date }}
+                                                </div>
+                                            {% endif %}
+                                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
+                                                Last login:
+                                                {{ user.last_login|date }}
+                                            </div>
+                                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
+                                                Subscription Code:
+                                                <fieldset disabled="disabled">
+                                                    {{ subscription.code }}
+                                                </fieldset>
+                                            </div>
+                                                <a class="btn btn-link text-primary"
+                                                   href="{% url 'account:edit' request.user.id %}">Update Profile</a>
+                                            </div>
                                         {% if request.user.pk == user.pk %}
                                             <div class="tab-pane fade" id="tabs-text-3" role="tabpanel"
                                                  aria-labelledby="tabs-text-3-tab">

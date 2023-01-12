@@ -63,14 +63,10 @@ class ProfileForm(forms.ModelForm):
         :return validated date of birth:
         """
         date_of_birth = self.cleaned_data['date_of_birth']
-        start_date_range = date(1950, 1, 1)
-        end_date_range = date.today() - timedelta(days=6570)
-        query_set = Profile.objects.filter(date_of_birth__gte=start_date_range,
-                                           date_of_birth__lte=end_date_range)
-        if not query_set:
+        age = (date.today() - date_of_birth) // timedelta(days=365.2425)
+        if age < 18:
             raise forms.ValidationError("Birthday is not allowed")
-        else:
-            return date_of_birth
+        return date_of_birth
 
 
 class SubscriptionForm(forms.ModelForm):
