@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from django import forms
 from account.models import User, Profile, Subscription
 
@@ -55,6 +56,21 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['date_of_birth', 'photo', 'favorite']
         widgets = {'date_of_birth': forms.widgets.DateInput(attrs={'type': 'date'})}
+
+    def clean_date_of_birth(self):
+        """
+        Custom validation for date of birth
+        :return validated date of birth:
+        """
+        date_of_birth = self.cleaned_data['date_of_birth']
+        start_date_range = date(1950, 1, 1)
+        end_date_range = date.today() - timedelta(days=6570)
+        query_set = Profile.objects.filter(date_of_birth__gte=start_date_range,
+                                           date_of_birth__lte=end_date_range)
+        if not query_set:
+            raise forms.ValidationError("Birthday is not allowed")
+        else:
+            return date_of_birth
 
 
 class SubscriptionForm(forms.ModelForm):
