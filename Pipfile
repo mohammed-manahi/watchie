@@ -13,6 +13,7 @@ django-crispy-forms = "*"
 django-multipleselectfield = "*"
 six = "*"
 django-multiselectfield = "*"
+django-auto-logout = "*"
 
 [dev-packages]
 

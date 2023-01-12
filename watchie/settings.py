@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -55,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Add third-party middleware to logout idle users
+    'django_auto_logout.middleware.auto_logout',
 ]
 
 ROOT_URLCONF = 'watchie.urls'
@@ -70,6 +73,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Add third-party auto-logout context processor
+                'django_auto_logout.context_processors.auto_logout_client',
             ],
         },
     },
@@ -151,3 +156,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Set mailing smtp server for development
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Use third-party auto-logout package to log out users after 10 minutes of inactivity
+AUTO_LOGOUT = {
+    'IDLE_TIME': timedelta(minutes=15),
+    'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+    'MESSAGE': 'The session has expired. Please login again to continue.',
+}
