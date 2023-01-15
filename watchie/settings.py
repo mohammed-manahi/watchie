@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     # Add third-party multi select field to handle many-to-many relationships
     'multiselectfield',
+    # Add stream app to installed apps
+    'stream.app.StreamConfig',
 ]
 
 MIDDLEWARE = [
