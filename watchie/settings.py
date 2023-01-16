@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     # Add third-party multi select field to handle many-to-many relationships
     'multiselectfield',
     # Add stream app to installed apps
-    'stream.app.StreamConfig',
+    'stream.apps.StreamConfig',
 ]
 
 MIDDLEWARE = [
