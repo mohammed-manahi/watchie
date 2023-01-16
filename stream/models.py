@@ -58,3 +58,9 @@ class Series(StreamBase):
     season_title = models.CharField(max_length=100)
     season_number = models.PositiveIntegerField()
     season_production_date = models.DateField()
+
+    class Meta:
+        indexes = [models.Index(fields=["-created_at"])]
+
+    def __str__(self):
+        return self.episode
