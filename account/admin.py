@@ -5,14 +5,14 @@ from account.models import User, Profile, Subscription
 
 class ProfileInline(admin.TabularInline):
     """
-    Add profile as inline ui view for user in admin site
+    Add profile model as inline ui view for user in admin site
     """
     model = Profile
 
 
 class SubscriptionInline(admin.TabularInline):
     """
-    Add subscription as inline ui view for user in admin site
+    Add subscription model as inline ui view for user in admin site
     """
     model = Subscription
 
@@ -20,7 +20,7 @@ class SubscriptionInline(admin.TabularInline):
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     """
-    Register customized user in admin site
+    Register customized user model in admin site
     """
     add_fieldsets = (
         (
