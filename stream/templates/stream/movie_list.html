@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Movies
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        <section class="section-profile-cover section-shaped my-0">
+            <img class="bg-image" src="{% static 'assets/img/slider/wallpaper.jpg' %}" style="width: 100%;">
+            <div class="separator separator-bottom separator-skew">
+                <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <polygon class="fill-secondary" points="2560 0 2560 100 0 100"></polygon>
+                </svg>
+            </div>
+        </section>
+        <div class="section features-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 mx-auto text-center mb-5 mt-0">
+                        <h3 class="display-3">
+                            {% if category %}
+                                {{ category.name|title }} Movies
+                            {% else %}
+                                Movie List
+                            {% endif %}
+                        </h3>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Categories
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'stream:movie_list' %}"
+                                   {% if not category %}class="selected"{% endif %}>All</a>
+                                {% for category in categories %}
+                                    <a class="dropdown-item" href="{{ category.get_absolute_url }}"
+                                       {% if category.slug == category.slug %}class="selected" {% endif %}>{{ category.name|title }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for movie in movies %}
+                        <div class="col-md-4">
+                            <div class="info text-center">
+                                <div class=" shadow rounded-circle">
+                                    <img src="{{ movie.poster.url }}" alt="" class="img-thumbnail">
+                                </div>
+                                <h6 class="info-title text-uppercase text-primary">{{ movie.title }}</h6>
+                                <p class="description opacity-8">{{ movie.description }}</p>
+                                <a href="javascript:;" class="text-primary">Watch
+                                    <i class="ni ni-bold-right text-primary"></i>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

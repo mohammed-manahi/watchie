@@ -28,6 +28,8 @@ urlpatterns = [
     # Add default route
     path('', views.index, name='index'),
     path('index/', views.index, name='index'),
+    # Include url patterns of stream app
+    path('stream/', include('stream.urls', namespace='stream')),
 
 ]
 
