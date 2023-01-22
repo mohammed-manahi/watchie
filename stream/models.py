@@ -82,6 +82,9 @@ class Movie(StreamBase):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('stream:movie_detail', args=[self.pk])
+
 
 class Series(StreamBase):
     """

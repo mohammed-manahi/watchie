@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Movies
+    {{ movie.title }}
 {% endblock %}
 {% block content %}
     <div class="wrapper">
@@ -17,31 +17,42 @@
         <div class="section features-1">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8 mx-auto text-center mb-5 mt-0">
-                        <h3 class="display-3">
-                            {% if category %}
-                                {{ category.name|title }} Movies
-                            {% else %}
-                                Movie List
-                            {% endif %}
-                        </h3>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false"> Categories
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{% url 'stream:movie_list' %}"
-                                   {% if not category %}class="selected"{% endif %}>All</a>
-                                {% for category in categories %}
-                                    <a class="dropdown-item" href="{{ category.get_absolute_url }}"
-                                       {% if category.slug == category.slug %}class="selected" {% endif %}>{{ category.name|title }}</a>
-                                {% endfor %}
-                            </div>
+                    <div class="col-md-10 mx-auto d-block">
+                        <div class="info text-center">
+                            <img src="{{ movie.poster.url }}" alt="" class="img-fluid"
+                                 style="max-height: 40%; max-width: 40%;">
+                            <h5 class="info-title text-uppercase text-primary">{{ movie.title|title }}</h5>
+                            <span class="badge badge-pill badge-primary text-uppercase">{{ movie.category }}</span>
+                            <br>
+                            <p class="info-title text-uppercase text-primary">Trailer</p>
+                            <div id="trailer" class="mx-auto justify-content-center"></div>
+                            <script>
+                                var player = new Clappr.Player({
+                                    source: "{{movie.trailer.url}}",
+                                    parentId: "#trailer",
+                                    mute: false,
+                                    height: 480,
+                                    width: 720,
+                                });
+                            </script>
+                            <p class="info-title text-uppercase text-primary">Watch</p>
+                            <div id="movie" class="mx-auto justify-content-center"></div>
+                            <script>
+                                var player = new Clappr.Player({
+                                    source: "{{movie.movie.url}}",
+                                    parentId: "#movie",
+                                    mute: false,
+                                    height: 480,
+                                    width: 720,
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
+                <br>
+                <p class="lead text-center"> Suggested Movies:</p><br>
                 <div class="row">
-                    {% for movie in movies %}
+                    {% for movie in suggested_movies %}
                         <div class="col-md-4">
                             <div class="info text-center">
                                 <a href="{{ movie.get_absolute_url }}">
@@ -61,6 +72,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 {% endblock %}
