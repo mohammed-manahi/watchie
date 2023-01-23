@@ -4,6 +4,7 @@
     Series
 {% endblock %}
 {% block content %}
+    {% include '_messages.html' %}
     <div class="wrapper">
         <section class="section-profile-cover section-shaped my-0">
             <img class="bg-image" src="{% static 'assets/img/slider/wallpaper.jpg' %}" style="width: 100%;">
@@ -14,7 +15,6 @@
                 </svg>
             </div>
         </section>
-        {% include '_messages.html' %}
         <div class="section features-1">
             <div class="container">
                 <div class="row">
