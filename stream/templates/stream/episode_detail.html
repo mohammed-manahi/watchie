@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    {{ series.title }}
+    {{ episode.episode_title }}
 {% endblock %}
 {% block content %}
     <div class="wrapper">
@@ -19,19 +19,27 @@
                 <div class="row">
                     <div class="col-md-10 mx-auto d-block">
                         <div class="info text-center">
-                            <img src="{{ series.season_poster.url }}" alt="" class="img-fluid"
+                            <img src="{{ season.season_poster.url }}" alt="" class="img-fluid"
                                  style="max-height: 40%; max-width: 40%;">
-                            <h5 class="info-title text-uppercase text-primary">{{ series.title|title }}</h5>
-                            <span class="badge badge-pill badge-primary text-uppercase">{{ series.category }}</span>
-                            <br>
-                            <span class="badge badge-pill badge-primary text-uppercase">Number of episodes: {{ number_of_episodes }}</span>
+                            <h5 class="info-title text-uppercase text-primary">{{ episode.episode_title|title }}</h5>
                             <br>
                             <p class="info-title text-uppercase text-primary">Trailer</p>
                             <div id="trailer" class="mx-auto justify-content-center"></div>
                             <script>
                                 var player = new Clappr.Player({
-                                    source: "{{series.main_trailer.url}}",
+                                    source: "{{season.season_trailer.url}}",
                                     parentId: "#trailer",
+                                    mute: false,
+                                    height: 480,
+                                    width: 720,
+                                });
+                            </script>
+                            <p class="info-title text-uppercase text-primary">Watch</p>
+                            <div id="episode" class="mx-auto justify-content-center"></div>
+                            <script>
+                                var player = new Clappr.Player({
+                                    source: "{{episode.episode.url}}",
+                                    parentId: "#episode",
                                     mute: false,
                                     height: 480,
                                     width: 720,
@@ -43,29 +51,7 @@
                 <br>
             </div>
         </div>
-        <p class="lead text-center"> All Seasons:</p><br>
-        <div class="row">
-            {% for season in all_seasons %}
-                <div class="col-md-4">
-                    <div class="info text-center">
-                        <a href="{{ season.get_absolute_url }}">
-                            <h6 class="info-title text-uppercase text-primary">{{ season.season_title }}</h6>
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <p class="lead text-center"> All Episodes:</p><br>
-        <div class="row">
-            {% for episode in all_episodes %}
-                <div class="col-md-4">
-                    <div class="info text-center">
-                        <a href="{{episode.get_absolute_url}}">
-                            <h6 class="info-title text-uppercase text-primary">{{ episode.episode_title }}</h6>
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        <p class="text-center lead"><a href="{{ season.get_absolute_url }}">Back to season </a></p>
+        <p class="text-center lead"><a href="{{ series.get_absolute_url }}">Back to series </a></p>
     </div>
 {% endblock %}

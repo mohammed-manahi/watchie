@@ -14,4 +14,9 @@ urlpatterns = [
     path('series-list/<slug:category_slug>/', views.series_list, name='series_list_by_category'),
     # Add series detail url pattern
     path('series/<int:pk>', views.series_detail, name='series_detail'),
+    # Add season detail url pattern
+    path('season/<int:series_pk>/<int:pk>', views.season_detail, name='season_detail'),
+    # Add episode detail url pattern
+    path('episode/<int:series_pk>/<int:season_pk>/<int:pk>', views.episode_detail, name='episode_detail'),
+
 ]

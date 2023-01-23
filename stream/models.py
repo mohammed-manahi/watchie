@@ -126,6 +126,9 @@ class Season(models.Model):
     def __str__(self):
         return self.season_title
 
+    def get_absolute_url(self):
+        return reverse('stream:season_detail', args=[self.series.pk, self.pk])
+
 
 class Episode(models.Model):
     """
@@ -140,3 +143,6 @@ class Episode(models.Model):
 
     def __str__(self):
         return self.episode_title
+
+    def get_absolute_url(self):
+        return reverse('stream:episode_detail', args=[self.series.pk, self.season.pk, self.pk])
