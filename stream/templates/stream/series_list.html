@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Movies
+    Series
 {% endblock %}
 {% block content %}
     <div class="wrapper">
@@ -21,9 +21,9 @@
                     <div class="col-md-8 mx-auto text-center mb-5 mt-0">
                         <h3 class="display-3">
                             {% if category %}
-                                {{ category.name|title }} Movies
+                                {{ category.name|title }} Series
                             {% else %}
-                                Movie List
+                                Series List
                             {% endif %}
                         </h3>
                         <div class="btn-group">
@@ -42,17 +42,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    {% for movie in movies %}
+                    {% for serie in series %}
                         <div class="col-md-4">
                             <div class="info text-center">
-                                <a href="{{ movie.get_absolute_url }}">
+                                <a href="{{ serie.get_absolute_url }}">
                                     <div class=" shadow rounded-circle">
-                                        <img src="{{ movie.poster.url }}" alt="" class="img-thumbnail">
+                                        <img src="{{ serie.main_poster.url }}" alt="" class="img-thumbnail">
                                     </div>
-                                    <h6 class="info-title text-uppercase text-primary">{{ movie.title }}</h6>
+                                    <h6 class="info-title text-uppercase text-primary">{{ serie.title }}</h6>
                                 </a>
-                                <span class="badge badge-pill badge-primary text-uppercase">{{ movie.category }}</span>
-                                <p class="description opacity-8">{{ movie.description }}</p>
+                                <span class="badge badge-pill badge-primary text-uppercase">{{ serie.category }}</span>
+                                <p class="description opacity-8">{{ serie.description }}</p>
                                 <a href="javascript:;" class="text-primary">Watch
                                     <i class="ni ni-bold-right text-primary"></i>
                                 </a>

@@ -22,7 +22,7 @@ def movie_list(request, category_slug=None):
     return render(request, template, context)
 
 
-@login_required()
+@login_required
 def movie_detail(request, pk):
     """
     Create movie detail view
@@ -36,5 +36,43 @@ def movie_detail(request, pk):
         template = 'stream/movie_detail.html'
         context = {'movie': movie, 'suggested_movies': suggested_movies}
         return render(request, template, context)
+    messages.error(request, "You don't have an active subscription to watch this content")
+    return redirect('stream:movie_list')
+
+
+def series_list(request, category_slug=None):
+    """
+    Create series list view
+    :param request:
+    :param category_slug:
+    :return:
+    """
+    category = None
+    series = Series.objects.all()
+    categories = Category.objects.all()
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        series = Series.objects.filter(category=category)
+    template = 'stream/series_list.html'
+    context = {'series': series, 'categories': categories, 'category': category}
+    return render(request, template, context)
+
+
+@login_required
+def series_detail(request, pk):
+    """
+    Create series detail view
+    :param request:
+    :param pk:
+    :return:
+    """
+    if is_subscription_active(request.user.pk):
+        if request.user.subscription.type == 'PR':
+            series = get_object_or_404(Series, pk=pk)
+            template = 'stream/series_detail.html'
+            context = {'series': series}
+            return render(request, template, context)
+        messages.error(request, "You subscription does not include watching this content")
+        return redirect('stream:series_list')
     messages.error(request, "You don't have an active subscription to watch this content")
     return redirect('index')

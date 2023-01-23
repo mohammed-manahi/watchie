@@ -90,17 +90,13 @@ class Series(StreamBase):
     """
     Create tv series model which extends stream base model
     """
-    episode_title = models.CharField(max_length=100)
-    episode_number = models.PositiveIntegerField()
-    episode = models.FileField(upload_to='stream/series/episodes',
-                               validators=[FileExtensionValidator(['mp4', 'webm', 'mkv', 'flv', 'wmv'])])
-    season_trailer = models.FileField(upload_to='stream/series/trailers',
-                                      validators=[FileExtensionValidator(['mp4', 'webm', 'mkv', 'flv', 'wmv'])])
-    season_poster = models.ImageField(upload_to='stream/series/posters',
-                                      validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
-    season_title = models.CharField(max_length=100)
-    season_number = models.PositiveIntegerField()
-    season_production_date = models.DateField()
+    main_trailer = models.FileField(upload_to='stream/movies/trailers',
+                                    validators=[FileExtensionValidator(['mp4', 'webm', 'mkv', 'flv', 'wmv'])],
+                                    default='stream/series/posters/Trailer.Base.jpg')
+    main_poster = models.ImageField(upload_to='stream/movies/posters',
+                                    validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])],
+                                    default='stream/series/posters/Poster.Base.jpg')
+    initial_production_date = models.DateField()
 
     class Meta:
         indexes = [models.Index(fields=["-created_at"])]
@@ -109,3 +105,38 @@ class Series(StreamBase):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('stream:series_detail', args=[self.pk])
+
+
+class Season(models.Model):
+    """
+    Create season model and associate it with many-to-one relationship with series model
+    """
+    series = models.ForeignKey(Series, on_delete=models.CASCADE, related_name='seasons')
+    season_trailer = models.FileField(upload_to='stream/series/trailers',
+                                      validators=[FileExtensionValidator(['mp4', 'webm', 'mkv', 'flv', 'wmv'])])
+    season_poster = models.ImageField(upload_to='stream/series/posters',
+                                      validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
+    season_title = models.CharField(max_length=100)
+    season_number = models.PositiveIntegerField()
+    season_production_date = models.DateField()
+
+    def __str__(self):
+        return self.season_title
+
+
+class Episode(models.Model):
+    """
+    Create episode model and associate it with many-to-one relationship with season model
+    """
+    series = models.ForeignKey(Series, on_delete=models.CASCADE, related_name='series_episodes')
+    season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='season_episodes')
+    episode_title = models.CharField(max_length=100)
+    episode_number = models.PositiveIntegerField()
+    episode = models.FileField(upload_to='stream/series/episodes',
+                               validators=[FileExtensionValidator(['mp4', 'webm', 'mkv', 'flv', 'wmv'])])
+
+    def __str__(self):
+        return self.episode_title

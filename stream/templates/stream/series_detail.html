@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ series.title }}
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        <section class="section-profile-cover section-shaped my-0">
+            <img class="bg-image" src="{% static 'assets/img/slider/wallpaper.jpg' %}" style="width: 100%;">
+            <div class="separator separator-bottom separator-skew">
+                <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <polygon class="fill-secondary" points="2560 0 2560 100 0 100"></polygon>
+                </svg>
+            </div>
+        </section>
+        <div class="section features-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 mx-auto d-block">
+                        <div class="info text-center">
+                            <img src="{{ series.season_poster.url }}" alt="" class="img-fluid"
+                                 style="max-height: 40%; max-width: 40%;">
+                            <h5 class="info-title text-uppercase text-primary">{{ series.title|title }}</h5>
+                            <span class="badge badge-pill badge-primary text-uppercase">{{ series.category }}</span>
+                            <br>
+                            <p class="info-title text-uppercase text-primary">Trailer</p>
+                            <div id="trailer" class="mx-auto justify-content-center"></div>
+                            <script>
+                                var player = new Clappr.Player({
+                                    source: "{{series.main_trailer.url}}",
+                                    parentId: "#trailer",
+                                    mute: false,
+                                    height: 480,
+                                    width: 720,
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-8 mx-auto text-center mb-5 mt-0">
+                         {{ series.season_title }}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"> Categories
+                            </button>
+                            <div class="dropdown-menu">
+{#                                <a class="dropdown-item" href="{% url 'stream:series_list' %}"#}
+{#                                   {% if not category %}class="selected"{% endif %}>All</a>#}
+{#                                {% for category in categories %}#}
+{#                                    <a class="dropdown-item" href="{{ category.get_absolute_url }}"#}
+{#                                       {% if category.slug == category.slug %}class="selected" {% endif %}>{{ category.name|title }}</a>#}
+{#                                {% endfor %}#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
