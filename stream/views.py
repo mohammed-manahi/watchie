@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 from django.contrib import messages
 from stream.models import Movie, Series, Category, Season, Episode
+from stream.helpers import episode_has_next, episode_has_previous
 from account.helpers import is_subscription_active
 
 
@@ -69,8 +71,8 @@ def series_detail(request, pk):
     if is_subscription_active(request.user.pk):
         if request.user.subscription.type == 'PR':
             series = get_object_or_404(Series, pk=pk)
-            all_seasons = series.seasons.all()
-            all_episodes = series.series_episodes.all()
+            all_seasons = series.seasons.all().order_by('season_number')
+            all_episodes = series.series_episodes.all().order_by('season__season_number', 'episode_number')
             number_of_episodes = series.series_episodes.count()
             template = 'stream/series_detail.html'
             context = {'series': series, 'all_seasons': all_seasons, 'number_of_episodes': number_of_episodes,
@@ -121,8 +123,12 @@ def episode_detail(request, pk, series_pk, season_pk):
             series = Series.objects.get(pk=series_pk)
             season = Season.objects.get(pk=season_pk)
             episode = get_object_or_404(Episode, pk=pk)
+            # Use helpers to check for next and previous episodes
+            next_episode = episode_has_next(pk)
+            previous_episode = episode_has_previous(pk)
             template = 'stream/episode_detail.html'
-            context = {'series': series, 'season': season, 'episode': episode}
+            context = {'series': series, 'season': season, 'episode': episode, 'next_episode': next_episode,
+                       'previous_episode': previous_episode}
             return render(request, template, context)
         messages.error(request, "You subscription does not include watching this content")
         return redirect('stream:series_list')

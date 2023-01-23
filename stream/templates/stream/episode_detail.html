@@ -51,7 +51,22 @@
                 <br>
             </div>
         </div>
-        <p class="text-center lead"><a href="{{ season.get_absolute_url }}">Back to season </a></p>
-        <p class="text-center lead"><a href="{{ series.get_absolute_url }}">Back to series </a></p>
+        <div class="info text-center">
+            {% if previous_episode %}
+                <a
+                        href="{% url 'stream:episode_detail' series.pk season.pk previous_episode.pk %}"
+                        class="btn btn-primary btn-round">Previous
+                    Episode </a>
+            {% endif %}
+            {% if next_episode %}
+                <a href="{% url 'stream:episode_detail' series.pk season.pk next_episode.pk %}"
+                   class="btn btn-primary btn-round">Next
+                    Episode </a>
+            {% endif %}
+
+            <p class="text-center lead"><a href="{{ season.get_absolute_url }}">Back to season </a></p>
+            <p class="text-center lead"><a href="{{ series.get_absolute_url }}">Back to series </a></p>
+        </div>
     </div>
+
 {% endblock %}
