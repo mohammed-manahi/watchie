@@ -5,6 +5,7 @@ from django.contrib import messages
 from stream.models import Movie, Series, Category, Season, Episode
 from stream.helpers import episode_has_next, episode_has_previous
 from account.helpers import is_subscription_active
+from activity.helpers import create_activity
 
 
 def movie_list(request, category_slug=None):
@@ -35,6 +36,7 @@ def movie_detail(request, pk):
     if is_subscription_active(request.user.pk):
         movie = get_object_or_404(Movie, pk=pk)
         suggested_movies = Movie.objects.filter(category=movie.category).exclude(pk=pk).order_by('-created_at')[:3]
+        create_activity(request.user, 'watched', movie)
         template = 'stream/movie_detail.html'
         context = {'movie': movie, 'suggested_movies': suggested_movies}
         return render(request, template, context)

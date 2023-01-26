@@ -44,7 +44,12 @@
                                 <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-text"
                                     role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-text-1-tab"
+                                        <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-text-0-tab"
+                                           data-toggle="tab" href="#tabs-text-0" role="tab" aria-controls="tabs-text-0"
+                                           aria-selected="true">Activity</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-1-tab"
                                            data-toggle="tab" href="#tabs-text-1" role="tab" aria-controls="tabs-text-1"
                                            aria-selected="true">Info</a>
                                     </li>
@@ -65,7 +70,22 @@
                             <div class="card shadow">
                                 <div class="card-body">
                                     <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="tabs-text-1" role="tabpanel"
+                                        <div class="tab-pane fade show active" id="tabs-text-0" role="tabpanel"
+                                             aria-labelledby="tabs-text-0-tab">
+                                            {% for activity in activities %}
+                                                <div class="h6 mt-4"><i></i>
+                                                    {{ activity.action }}
+                                                    {% if activity.target %}
+                                                        {% with target=activity.target %}
+                                                            {{ target }}
+                                                        {% endwith %}
+                                                    {% endif %}
+                                                    <span class="badge badge-pill badge-primary text-uppercase">{{ activity.created_at|timesince }} ago
+                                                    </span>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="tab-pane fade show" id="tabs-text-1" role="tabpanel"
                                              aria-labelledby="tabs-text-1-tab">
                                             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>
                                                 Subscription Active?
@@ -132,7 +152,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
     </div>
 {% endblock %}
