@@ -20,3 +20,5 @@ class Activity(models.Model):
     class Meta:
         indexes = [models.Index(fields=['created_at']), models.Index(fields=['target_content_type', 'target_id'])]
         ordering = ['-created_at']
+        verbose_name = 'activity'
+        verbose_name_plural = 'activities'
