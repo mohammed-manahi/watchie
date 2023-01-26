@@ -11,7 +11,7 @@
             {% endfor %}
         </ul>
     {% endif %}
-    <div class="text-center">
+    <div class="text-center mx-auto col-md-6">
         <h1>Edit your account</h1>
         <p>You can edit your account using the following form:</p>
         {# enctype is requried since the profile form contains photo upload #}
@@ -22,7 +22,7 @@
             {{ user_form.as_p }}
             {{ profile_form.as_p }}
             {% csrf_token %}
-            <p><input type="submit" value="Save changes"></p>
+            <p><input type="submit" value="Save changes" class="btn btn-primary btn-lg"></p>
         </form>
     </div>
 {% endblock %}

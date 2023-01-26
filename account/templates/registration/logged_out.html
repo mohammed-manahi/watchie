@@ -1,11 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
     Logged out
 {% endblock %}
 {% block content %}
-    <h2 class="text-center">Logged out</h2>
-    <p class="text-center">
-        You have been successfully logged out.
-        You can <a href="{% url 'login' %}"> Login again</a>
-    </p>
+    <div class="wrapper">
+        <section class="section-profile-cover section-shaped my-0">
+            <img class="bg-image" src="{% static 'assets/img/slider/wallpaper.jpg' %}" style="width: 100%;">
+            <div class="separator separator-bottom separator-skew">
+                <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <polygon class="fill-secondary" points="2560 0 2560 100 0 100"></polygon>
+                </svg>
+            </div>
+        </section>
+        <h2 class="text-center">Logged out</h2>
+        <p class="text-center">
+            You have been successfully logged out.
+            You can <a href="{% url 'login' %}"> Login again</a>
+        </p>
+    </div>
 {% endblock %}
