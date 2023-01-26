@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'multiselectfield',
     # Add stream app to installed apps
     'stream.apps.StreamConfig',
+    # Add activity app to installed apps
+    'activity.apps.ActivityConfig',
 ]
 
 MIDDLEWARE = [
