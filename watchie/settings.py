@@ -50,8 +50,6 @@ INSTALLED_APPS = [
     'stream.apps.StreamConfig',
     # Add activity app to installed apps
     'activity.apps.ActivityConfig',
-    # Add reaction app to installed apps
-    'reaction.apps.ReactionConfig',
 ]
 
 MIDDLEWARE = [
