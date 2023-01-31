@@ -30,7 +30,8 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     # Include url patterns of stream app
     path('stream/', include('stream.urls', namespace='stream')),
-
+    # Include url patterns of payment app
+    path('payment/', include('payment.urls', namespace='payment')),
 ]
 
 if settings.DEBUG:

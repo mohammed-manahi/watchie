@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}
+    Subscribe
+{% endblock %}
+{% block content %}
+    {% include '_messages.html' %}
+    <div class="section features-1">
+        <div class="container ml-auto text-center">
+            <div class="row text-center">
+                <div class="col-md-8 mx-auto text-center">
+                    <h3 class="display-3 mt--0">Watch movies and TV shows</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="info">
+                        <div class="icon icon-lg icon-shape icon-shape-primary shadow rounded-circle">
+                            <i class="ni ni-settings-gear-65"></i>
+                        </div>
+                        <h6 class="info-title text-uppercase text-primary">Trial Plan</h6>
+                        <p class="description opacity-8">Trial Plan valid for 14 days</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info">
+                        <div class="icon icon-lg icon-shape icon-shape-primary shadow rounded-circle">
+                            <i class="ni ni-single-copy-04"></i>
+                        </div>
+                        <h6 class="info-title text-uppercase text-primary">Standard Plan</h6>
+                        <p class="description opacity-8">Watch movies only</p>
+                        <b class="description opacity-8">$19.00/month</b>
+                        <br>
+                        <form action="{% url 'payment:standard_subscription' %}" method="post">
+                            <input type="submit" value="Purchase now" class="btn btn-lg btn-primary">
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info">
+                        <div class="icon icon-lg icon-shape icon-shape-primary shadow rounded-circle">
+                            <i class="ni ni-single-02"></i>
+                        </div>
+                        <h6 class="info-title text-uppercase text-primary">Premium Plan</h6>
+                        <p class="description opacity-8">Watch movies and series</p>
+                        <b class="description opacity-8">$39.00/month</b>
+                        <br>
+                        <form action="{% url 'payment:premium_subscription' %}" method="post">
+                            <input type="submit" value="Purchase now" class="btn btn-lg btn-primary">
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

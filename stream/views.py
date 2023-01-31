@@ -1,7 +1,9 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.contrib import messages
+from django.views.decorators.http import require_POST
 from stream.models import Movie, Series, Category, Season, Episode
 from stream.helpers import episode_has_next, episode_has_previous
 from account.helpers import is_subscription_active

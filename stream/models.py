@@ -1,7 +1,7 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
-
 from account.models import User
 
 

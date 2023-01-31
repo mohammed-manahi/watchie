@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'stream.apps.StreamConfig',
     # Add activity app to installed apps
     'activity.apps.ActivityConfig',
+    # Add payment app to installed apps
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -167,3 +169,9 @@ AUTO_LOGOUT = {
     'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
     'MESSAGE': 'The session has expired. Please login again to continue.',
 }
+
+# Configure stripe payment
+STRIPE_PUBLISHABLE_KEY = str(os.getenv('STRIPE_PUBLISHABLE_KEY'))
+STRIPE_SECRET_KEY = str(os.getenv('STRIPE_SECRET_KEY'))
+STRIPE_API_VERSION = str(os.getenv('STRIPE_API_VERSION'))
+STRIPE_WEBHOOK_SECRET = str(os.getenv('STRIPE_WEBHOOK_SECRET'))
